@@ -26,6 +26,8 @@ new_post_ext    = "markdown"  # default new post file extension when using the n
 new_page_ext    = "markdown"  # default new page file extension when using the new_page task
 server_port     = "4000"      # port for preview server eg. localhost:4000
 
+## -- My Configs -- ##
+editor			= "/Applications/Mou.app/Contents/MacOS/Mou"	# default editor for new_post/new_page
 
 desc "Initial setup for Octopress: copies the default theme into the path of Jekyll's generator. Rake install defaults to rake install[classic] to install a different theme run rake install[some_theme_name]"
 task :install, :theme do |t, args|
@@ -109,6 +111,9 @@ task :new_post, :title do |t, args|
     post.puts "categories: "
     post.puts "---"
   end
+  if open
+     `#{editor} #{filename}`
+  end
 end
 
 # usage rake new_page[my-new-page] or rake new_page[my-new-page.html] or rake new_page (defaults to "new-page.markdown")
@@ -144,6 +149,9 @@ task :new_page, :filename do |t, args|
       page.puts "sharing: true"
       page.puts "footer: true"
       page.puts "---"
+    end
+    if open
+  	`#{editor} #{file}`
     end
   else
     puts "Syntax error: #{args.filename} contains unsupported characters"
